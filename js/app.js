@@ -13,7 +13,7 @@ searchForm.addEventListener('submit', () => {
     
     getTemp(zip, morning)
         .then(data => {
-            const tempData = new DataTracker(data, morning).showMin();
+            const tempData = new DataTracker(data, morning).showMax();
             statsSection.appendChild(tempData);
         });
 });

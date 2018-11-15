@@ -2,6 +2,7 @@ export default class DataTracker {
     constructor(dataset, type) {
         this.dataset = dataset;
         this.type = type;
+        this.sorted = this.dataset.sort((a, b) => a.main.temp - b.main.temp);
     }
 
     insert(value) {
@@ -28,13 +29,23 @@ export default class DataTracker {
         if(this.type === '6:00:00 AM') h2.textContent = 'Morning Temperatures (6AM)';
         if(this.type === '12:00:00 PM') h2.textContent = 'Day Temperatures (12PM)';
         if(this.type === '6:00:00 PM') h2.textContent = 'Night Temperatures (6PM)';
-        
+
         return dom;
     }
 
     showMin() {
-        const sorted = this.dataset.sort((a, b) => a.main.temp - b.main.temp);
-        const min = this.render(sorted.slice(0, 1));
-        return min;
+        const min = [];
+        min.push(this.sorted[0]);
+
+        const minValue = this.render(min);
+        return minValue;
+    }
+
+    showMax() {
+        const max = [];
+        max.push(this.sorted[this.sorted.length - 1]);
+
+        const maxValue = this.render(max);
+        return maxValue;
     }
 }
