@@ -5,16 +5,7 @@ export default class DataTracker {
         this.sorted = this.dataset.sort((a, b) => a.main.temp - b.main.temp);
     }
 
-    insert(value) {
-        let data = {};
-        data.dataValue = value;
-        this.dataset.push(data);
-    }
-
     render(weatherData = this.dataset) {
-        const domSection = document.getElementById('stats');
-        while(domSection.lastElementChild) domSection.lastElementChild.remove();
-
         const dom = document.getElementById('stats-template').content.cloneNode(true);
         const h2 = dom.querySelector('h2');
         const ul = dom.querySelector('ul');
@@ -22,13 +13,20 @@ export default class DataTracker {
         weatherData.forEach(data => {
             let date = new Date(data.dt_txt).toLocaleDateString();
             const li = document.createElement('li');
-            li.textContent = `${data.main.temp}\xB0 Fahrenheit on ${date}`;
+
+            if(this.type === 'humidity') {
+                li.textContent = `${data.main.humidity}% humidity on ${date}`;
+                h2.textContent = 'Humidity (12PM)';
+            }
+            else {
+                li.textContent = `${data.main.temp}\xB0 Fahrenheit on ${date}`;
+                if(this.type === '6:00:00 AM') h2.textContent = 'Morning Temperatures (6AM)';
+                else if(this.type === '12:00:00 PM') h2.textContent = 'Day Temperatures (12PM)';
+                else h2.textContent = 'Night Temperatures (6PM)';
+            }
+
             ul.appendChild(li);
         });
-
-        if(this.type === '6:00:00 AM') h2.textContent = 'Morning Temperatures (6AM)';
-        if(this.type === '12:00:00 PM') h2.textContent = 'Day Temperatures (12PM)';
-        if(this.type === '6:00:00 PM') h2.textContent = 'Night Temperatures (6PM)';
 
         return dom;
     }
@@ -65,6 +63,5 @@ export default class DataTracker {
                 mode.push(this.dataset[i], this.dataset[i + 1]);
             }
         }
-        console.log(mode);
     }
 }

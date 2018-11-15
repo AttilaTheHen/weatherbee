@@ -5,20 +5,35 @@ import DataTracker from './DataTracker.js';
 const searchForm = document.getElementById('search-form');
 const statsSection = document.getElementById('stats');
 
-const morning = '6:00:00 AM';
+const times = ['humidity', '6:00:00 AM', '12:00:00 PM', '6:00:00 PM'];
 
 searchForm.addEventListener('submit', () => {
     event.preventDefault();
     const zip = document.getElementById('search').value;
+    clear();
     
-    getTemp(zip, morning)
-        .then(data => {
-            const tempData = new DataTracker(data, morning).render();
-            statsSection.appendChild(tempData);
-        });
+    times.forEach(time => {
+        if(time === 'humidity') {
+            getData(zip, '12:00:00 PM')
+                .then(data => {
+                    const humidity = new DataTracker(data, 'humidity').render();
+                    statsSection.appendChild(humidity);
+                });
+        }
+        getData(zip, time)
+            .then(data => {
+                const tempData = new DataTracker(data, time).render();
+                statsSection.appendChild(tempData);
+            });
+    });
 });
 
-const getTemp = (zip, time) => {
+const getData = (zip, time) => {
     return getWeather(zip, API_KEY)
         .then(data => data.list.filter(entry => new Date(entry.dt_txt).toLocaleTimeString() === time));
+};
+
+const clear = () => {
+    const domSection = document.getElementById('stats');
+    while(domSection.lastElementChild) domSection.lastElementChild.remove();
 };
