@@ -1,0 +1,23 @@
+{
+  "name": "weatherbee",
+  "version": "1.0.0",
+  "description": "Frontend for searching and displaying data from the OpenWeatherMap API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server -o"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AttilaTheHen/weatherbee.git"
+  },
+  "author": "Injoong Yoon <injoongyoon@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AttilaTheHen/weatherbee/issues"
+  },
+  "homepage": "https://github.com/AttilaTheHen/weatherbee#readme",
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
+}
