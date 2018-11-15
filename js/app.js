@@ -10,6 +10,7 @@ const morning = '6:00:00 AM';
 searchForm.addEventListener('submit', () => {
     event.preventDefault();
     const zip = document.getElementById('search').value;
+    
     getTemp(zip, morning)
         .then(data => {
             const tempData = new DataTracker(data, morning).render();
