@@ -10,7 +10,7 @@ export default class DataTracker {
         this.dataset.push(data);
     }
 
-    render() {
+    render(tempObj = this.dataset) {
         const domSection = document.getElementById('stats');
         while(domSection.lastElementChild) domSection.lastElementChild.remove();
 
@@ -18,7 +18,7 @@ export default class DataTracker {
         const h2 = dom.querySelector('h2');
         const ul = dom.querySelector('ul');
 
-        this.dataset.forEach(entry => {
+        tempObj.forEach(entry => {
             let date = new Date(entry.dt_txt).toLocaleDateString();
             const li = document.createElement('li');
             li.textContent = `${entry.main.temp}\xB0 Fahrenheit on ${date}`;
@@ -26,8 +26,15 @@ export default class DataTracker {
         });
 
         if(this.type === '6:00:00 AM') h2.textContent = 'Morning Temperatures (6AM)';
-        if(this.type === '12:00:00 PM') h2.textContent = 'Day Temperatures (6AM)';
+        if(this.type === '12:00:00 PM') h2.textContent = 'Day Temperatures (12PM)';
         if(this.type === '6:00:00 PM') h2.textContent = 'Night Temperatures (6PM)';
+        
         return dom;
+    }
+
+    showMin() {
+        const sorted = this.dataset.sort((a, b) => a.main.temp - b.main.temp);
+        const min = this.render(sorted.slice(0, 1));
+        return min;
     }
 }
