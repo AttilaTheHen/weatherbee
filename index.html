@@ -10,17 +10,25 @@
 <body>
     <h1>WeatherBee</h1>
 
-    <section>
+    <section id="search-section">
         <form id="search-form">
             <label for="search">Enter a US ZIP code:</label>
-            <input type="text" id="search">
+            <input type="text" id="search" required>
 
             <input type="submit" value="Search">
         </form>
     </section>
 
+    <template id="buttons">
+        <button id="min">Min</button>
+        <button id="max">Max</button>
+        <button id="mean">Mean</button>
+        <button id="mode">Mode</button>
+    </template>
+
     <section id="stats">
     </section>
+
 
     <template id="stats-template">
         <section>

@@ -20,11 +20,13 @@ searchForm.addEventListener('submit', () => {
                     statsSection.appendChild(humidity);
                 });
         }
-        getData(zip, time)
-            .then(data => {
-                const tempData = new DataTracker(data, time).render();
-                statsSection.appendChild(tempData);
-            });
+        else {
+            getData(zip, time)
+                .then(data => {
+                    const tempData = new DataTracker(data, time).render();
+                    statsSection.appendChild(tempData);
+                });
+        }
     });
 });
 
