@@ -1,6 +1,7 @@
 export default class DataTracker {
-    constructor(dataset) {
+    constructor(dataset, type) {
         this.dataset = dataset;
+        this.type = type;
     }
 
     insert(value) {
@@ -11,12 +12,16 @@ export default class DataTracker {
 
     render() {
         const dom = document.getElementById('stats-template').content;
+        const h2 = dom.querySelector('h2');
         const ul = dom.querySelector('ul');
+
         this.dataset.forEach(entry => {
             const li = document.createElement('li');
             li.textContent = entry.main.temp;
             ul.appendChild(li);
         });
+
+        if(this.type === '6:00:00 AM') h2.textContent = 'Morning Temperatures';
         return dom;
     }
 }
