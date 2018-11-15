@@ -11,7 +11,7 @@ export default class DataTracker {
         this.dataset.push(data);
     }
 
-    render(tempObj = this.dataset) {
+    render(weatherData = this.dataset) {
         const domSection = document.getElementById('stats');
         while(domSection.lastElementChild) domSection.lastElementChild.remove();
 
@@ -19,10 +19,10 @@ export default class DataTracker {
         const h2 = dom.querySelector('h2');
         const ul = dom.querySelector('ul');
 
-        tempObj.forEach(entry => {
-            let date = new Date(entry.dt_txt).toLocaleDateString();
+        weatherData.forEach(data => {
+            let date = new Date(data.dt_txt).toLocaleDateString();
             const li = document.createElement('li');
-            li.textContent = `${entry.main.temp}\xB0 Fahrenheit on ${date}`;
+            li.textContent = `${data.main.temp}\xB0 Fahrenheit on ${date}`;
             ul.appendChild(li);
         });
 
@@ -47,5 +47,14 @@ export default class DataTracker {
 
         const maxValue = this.render(max);
         return maxValue;
+    }
+
+    showMean() {
+        const total = this.dataset.reduce((a, c) => a + c.main.temp, 0);
+        const mean = total / this.dataset.length;
+        
+        const p = document.createElement('p');
+        p.textContent = mean;
+        return p;
     }
 }
