@@ -57,4 +57,14 @@ export default class DataTracker {
         p.textContent = mean;
         return p;
     }
+
+    showMode() {
+        const mode = [];
+        for(let i = 0; i < this.dataset.length - 1; i++) {
+            if(this.dataset[i].main.temp === this.dataset[i + 1].main.temp) {
+                mode.push(this.dataset[i], this.dataset[i + 1]);
+            }
+        }
+        console.log(mode);
+    }
 }
